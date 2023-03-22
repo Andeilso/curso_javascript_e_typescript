@@ -10,7 +10,17 @@ a{
 body{
     background-color: #1f1e1e;
     color: white;
-    /* display: flex; */
+}
+
+h1{
+    margin: 50px;
+    text-transform: uppercase;
+}
+
+#cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .card{
@@ -21,14 +31,31 @@ body{
     flex-wrap: wrap;
     justify-content: center;
 
+    position: relative;
     overflow: hidden;
     
-    border: 2px solid white;
-
+    border: 4px solid #042e20;
+    border-radius: 10px;
+    margin-bottom: 50px;
+    
+    background-color: #042e20;
+    color: white;
 }
 
 .card img{
     width: 300px;
-    height: 170px;
+    height: 180px;
+    border-radius: 10px 10px 0px 0px;
 }
 
+.card #version{
+    position: absolute;
+    bottom: 6px;
+    right: 9px;
+}
+
+footer{
+    position: fixed;
+    bottom: 7px;
+    right: 10px;
+}
