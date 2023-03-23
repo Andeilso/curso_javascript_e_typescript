@@ -8,6 +8,12 @@ body{
     color: white;
 }
 
+a{
+    text-decoration: none;
+    color: white;
+    text-align: center;
+}
+
 #container-time{
     width: 700px;
     height: 350px;
