@@ -18,7 +18,7 @@ let excluirTarefa = (e) => {
     for (let li = 0; li < lista.children.length; li++) {
         if(e.target.parentNode.innerHTML === lista.children[li].innerHTML){
             listaIndex--;
-            return lista.removeChild(lista.children[li]);
+            lista.removeChild(lista.children[li]);
         };
     }
 
