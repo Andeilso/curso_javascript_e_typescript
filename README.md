@@ -2,6 +2,7 @@
 
 ## Desafios realizados
 - TIMER
+- Lista de Tarefas
 
 
 ## Tecnologias
