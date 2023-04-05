@@ -10,7 +10,6 @@ let adicionarTarefa = () => {
     lista.appendChild(document.createElement('li'));
     lista.children[listaIndex].innerHTML = `${tarefaInput.value} <button id="excluir">Excluir</button>`;
     listaIndex++;
-    console.log(lista)
 };
 
 let excluirTarefa = (e) => {
