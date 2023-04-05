@@ -8,6 +8,8 @@
 body{
     background-color: #1f1e1e;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+    text-align: center;
 }
 
 #container-lista-tarefas{
@@ -103,4 +105,9 @@ li button{
     
     border: 1px outset #0000008a;
     border-radius: 50px;
+}
+
+a{
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }

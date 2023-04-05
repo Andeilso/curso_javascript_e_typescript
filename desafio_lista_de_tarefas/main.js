@@ -2,14 +2,16 @@ let tarefaInput = document.getElementById('tarefa');
 let lista = document.getElementById('lista-ul');
 listaIndex = lista.children.length;
 
-let adicionarTarefa = () => {
-    if(tarefaInput.value == ''){
+let adicionarTarefa = (tarefa) => {
+    if(tarefa == ''){
         return
     }
 
     lista.appendChild(document.createElement('li'));
-    lista.children[listaIndex].innerHTML = `${tarefaInput.value} <button id="excluir">Excluir</button>`;
+    lista.children[listaIndex].innerHTML = `${tarefa} <button id="excluir">Excluir</button>`;
     listaIndex++;
+
+    adicionarEmLocalStorage();
 };
 
 let excluirTarefa = (e) => {
@@ -19,6 +21,8 @@ let excluirTarefa = (e) => {
             return lista.removeChild(lista.children[li]);
         };
     }
+
+    adicionarEmLocalStorage();
 };
 
 let limparCampoDeTarefa = () => {
@@ -28,23 +32,40 @@ let limparCampoDeTarefa = () => {
 
 document.addEventListener('keypress', (e) => {
     if(e.keyCode === 13){
-        adicionarTarefa();
+        adicionarTarefa(tarefaInput.value);
         limparCampoDeTarefa();
     }
 })
 
 document.addEventListener('click', (e) => {
     if (e.target.id === 'adicionar') {
-        adicionarTarefa(); 
+        adicionarTarefa(tarefaInput.value); 
         limparCampoDeTarefa();
     }
 
     if(e.target.id === 'excluir'){
         excluirTarefa(e);
     }
-
-    console.log(e.target);
 })
 
-tarefaInput.focus();
+adicionarEmLocalStorage = () => {
+    let itensTarefas = [];
 
+    for (let tarefa = 0; tarefa < lista.children.length; tarefa++) {
+        itensTarefas.push(lista.childNodes[tarefa].innerHTML.replace('<button id="excluir">Excluir</button>', ''));
+    }
+
+    const listaTarefas = JSON.stringify(itensTarefas);
+    localStorage.setItem('tarefas', listaTarefas);
+}
+
+itensEmLocalStorage = () => {
+    let tarefas = JSON.parse(localStorage.getItem('tarefas'));
+
+    for (const tarefa of tarefas) {
+        adicionarTarefa(tarefa);
+    }
+}
+
+itensEmLocalStorage();
+tarefaInput.focus();
