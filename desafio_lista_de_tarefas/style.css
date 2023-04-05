@@ -11,33 +11,73 @@ body{
 }
 
 #container-lista-tarefas{
-    width: 800px;
-    height: 450px;
-    margin: 12% auto;
+    margin: 100px 9%;
     padding: 20px;
     
     border-radius: 15px;
 
     text-align: center;
     background-color: #e7e7e7;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 h1{
     text-transform: uppercase;
+
+    margin-left: 10px;
+    width: 100%;
 }
 
 #add-tarefa{
-    margin-top: 20px;
+    margin: 25px 50px 20px 50px;
+    padding: 2px 3px;
+    border-bottom: 1px solid black;
+
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+#tarefa{
+    padding: 2px 0px 2px 15px;
+    width: 100%;
+
+    border: none;
+    background-color: unset;
+
+    font-size: 16px;
+}
+
+#tarefa:focus{
+    border: none;
+    outline: none;
+}
+
+#adicionar{
+    padding: 6px 12px 6px 12px;
+    margin-right: 10px;
+
+    outline: none;
+    background-color: unset;
+    border: unset;
+    cursor: pointer;
+
+    font-size: 10px;
+}
+
+#adicionar:focus{
+    border: none;
+    outline: none;
 }
 
 #lista{
     margin: 20px auto;
-    width: 100%;
     height: 78%;
 
-    border: 1px solid #1f1e1e;
     border-radius: 1px 1px 15px 15px;
-    overflow: scroll;
 }
 
 #lista-ul{
