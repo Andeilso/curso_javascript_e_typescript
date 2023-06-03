@@ -27,8 +27,6 @@ function Calculadora () {
         for (const item of btnLista) {
 
             if (item.innerText == el) {
-                console.log(item.innerHTML);
-                console.log(el);
                 adicionarAoVisor(el);
                 return
             }
@@ -160,11 +158,11 @@ function Calculadora () {
                 outraOperacao = false;
             }
         }
-        console.log("soma conta", conta);
+
         multi = `${conta.slice((conta.indexOf('+')-paraTras) , conta.indexOf('+'))}+${conta.slice(conta.indexOf('+')+1 , conta.indexOf('+')+paraFentre)}`;
-        console.log("soma multi", multi);
+
         res = parseInt(conta.slice((conta.indexOf('+')-paraTras) , conta.indexOf('+')))+parseInt(conta.slice(conta.indexOf('+')+1 , conta.indexOf('+')+paraFentre));
-        console.log("soma res", res);
+        
         return conta = conta.replace(multi, res);
     }
 
@@ -198,9 +196,9 @@ function Calculadora () {
         }
 
         multi = `${conta.slice((conta.indexOf('-')-paraTras) , conta.indexOf('-'))}-${conta.slice(conta.indexOf('-')+1 , conta.indexOf('-')+paraFentre)}`;
-        console.log("subtação multi ", multi);
+
         res = conta.slice((conta.indexOf('-')-paraTras) , conta.indexOf('-'))-conta.slice(conta.indexOf('-')+1 , conta.indexOf('-')+paraFentre);
-        console.log("subtação res ", res);
+
         return conta = conta.replace(multi, res);  
     }
 
@@ -255,7 +253,7 @@ function Calculadora () {
     }
 
     const resultado = () => {
-        visor.innerText = funcoesCalc('484/22*22/22+38-65+(55+945+20)');
+        visor.innerText = funcoesCalc(visor.innerText);
     }
     
     this.iniciar = () => {
