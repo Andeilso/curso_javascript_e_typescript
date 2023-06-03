@@ -1,191 +1,276 @@
-let visor = document.getElementById('visor');
-let conta = [];
+// Construtora começa com Letra Maiuscula
+function Calculadora () {
+    const visor = document.getElementById('visor');
 
-const digitarNoVisor = (target) => {
-    switch (target) {
-        case 'c':
-            visor.innerText = '';
-            conta = [];
-            break
-        case '(':
-            visor.innerText += '(';
-            conta.push('(');
-            break
-        case ')':
-            visor.innerText += ')';
-            conta.push(')');
-            break
-        case '/':
-            visor.innerText += '/';
-            conta.push('/');
-            break
-        case '7':
-            visor.innerText += '7';
-            conta.push('7');
-            break
-        case '8':
-            visor.innerText += '8';
-            conta.push('8');
-            break
-        case '9':
-            visor.innerText += '9';
-            conta.push('9');
-            break
-        case '*':
-            visor.innerText += '*';
-            conta.push('*');
-            break
-        case '4':
-            visor.innerText += '4';
-            conta.push('4');
-            break
-        case '5':
-            visor.innerText += '5';
-            conta.push('5');
-            break
-        case '6':
-            visor.innerText += '6';
-            conta.push('6');
-            break
-        case '+':
-            visor.innerText += '+';
-            conta.push('+');
-            break
-        case '1':
-            visor.innerText += '1';
-            conta.push('1');
-            break
-        case '2':
-            visor.innerText += '2';
-            conta.push('2');
-            break
-        case '3':
-            visor.innerText += '3';
-            conta.push('3');
-            break
-        case '-':
-            visor.innerText += '-';
-            conta.push('-');
-            break
-        case '.':
-            visor.innerText += '.';
-            conta.push('.');
-            break
-        case ',':
-            visor.innerText += '.';
-            conta.push('.');
-            break
-        case '0':
-            visor.innerText += '0';
-            conta.push('0');
-            break
-        case '<<':
-            visor.innerText = visor.innerText.slice(0, visor.innerText.length - 1);
-            conta.pop();
-            break
-        case 'Backspace':
-            visor.innerText = visor.innerText.slice(0, visor.innerText.length - 1);
-            conta.pop();
-            break
-        case '=':
-            visor.innerText = calcular(conta);
-            if (visor.innerText == 'undefined') {
-                visor.innerText ='ERROR +/';
-            }
-            conta = [];
-            break
-        case 'Enter':
-            visor.innerText = calcular(conta);
-            if (visor.innerText == 'undefined') {
-                visor.innerText ='ERROR +/';
-            }
-            conta = [];
-            break
-        default:
-            break
+    const dispararFuncaoClique = (el) => {
+        
+        if (el.classList.contains('btn')) {
+            adicionarAoVisor(el.innerText);
+        }
+
+        if(el.classList.contains('apagar')) {
+            apagarUltimaEntrada();
+        }
+
+        if (el.classList.contains('zerar')) {
+            apagarTudo();
+        }
+
+        if(el.classList.contains('res')){
+            resultado();
+        }
     }
-}
 
-const transformarParaCalcular = (conta) => {
-    let arrayNumParaConta = [];
-    let operadores = null;
-    let num = 0;
+    const dispararFuncaoKey = (el) => {
+        btnLista = document.getElementsByClassName('btn');
 
-    conta.forEach( (el, i) => {
-        operadores = el === '+' || el === '-' || el === '/' || el === '*' ? true : false;
-        
-        if(!operadores) {
-            num = num === 0? el :`${num}${el}`;
-        } else {
-            num !== 0 ? arrayNumParaConta.push(parseInt(num)) : '';
-            num = 0;
-            arrayNumParaConta.push(el);
-            operadores = null;
-        }
+        for (const item of btnLista) {
 
-        if (conta.length-1 === i) {
-            arrayNumParaConta.push(parseInt(num));
-        }
-    });
-
-    return arrayNumParaConta
-}
-
-const calcular = (conta) => {
-    let arrayConta = transformarParaCalcular(conta);
-    let total;
-    let num = 0;
-    let operador = null;
-
-    arrayConta.forEach( (el, i) => {
-        if(operador && operador != el){
-            switch (operador) {
-                case '/':
-                    operador = null
-                    num = (num/el);
-                    break;
-                case '*':
-                    if(num*el){
-                        operador = null
-                        num = (num*el);
-                    }
-                    break;
-                case '-':
-                    operador = null
-                    num = (num-el);
-                    break;
-                case '+':
-                    operador = null
-                    num = (num+el);
-                    break;
-                case '**':
-                    if(parseInt(el)){
-                        operador = null
-                        num = (num**el);
-                    }
-                    break
-                default:
-                    alert('Conta Inválida!')
-                    return total = 0;
-                    break;
+            if (item.innerText == el) {
+                console.log(item.innerHTML);
+                console.log(el);
+                adicionarAoVisor(el);
+                return
             }
         }
+
+
+        if(el == 'Backspace') {
+            apagarUltimaEntrada();
+        }
+
+        if (el == 'C') {
+            apagarTudo();
+        }
+
+        if(el == 'Enter'){
+            resultado();
+        }
+    }
+
+    const adicionarAoVisor = (el) => {
+        visor.innerText += el;
+    };
+
+    const apagarUltimaEntrada = () => {
+        visor.innerHTML = visor.innerHTML.slice(0, -1);
+    }
+
+    const apagarTudo = () => {
+        visor.innerHTML = '';
+    }
+
+    const multiplicacao = (conta) => {
+        let multi;
+            let res;
+            let paraTras;
+            let paraFentre;
+            let outraOperacao = true;
+
+            for (let i = 1; i < conta.length; i++) {
+                if( conta.indexOf('*')-i >= 0 
+                && !!(parseInt( conta[conta.indexOf('*')-i] ) || conta[conta.indexOf('+')-i] === '0')
+                && outraOperacao ){
+                    paraTras = i;
+                } else {
+                    outraOperacao = false;
+                }
+            }
+
+            outraOperacao = true;
+
+            for (let i = 1; i < conta.length; i++) {
+                if( conta.indexOf('*')+i >= 0 
+                && (!!( parseInt( conta[conta.indexOf('+')+i] )) || conta[conta.indexOf('+')+i] === '0')
+                && outraOperacao ){
+                    paraFentre = i+1;
+                } else {
+                    outraOperacao = false;
+                }
+            }
+
+            multi = `${conta.slice((conta.indexOf('*')-paraTras) , conta.indexOf('*'))}*${conta.slice(conta.indexOf('*')+1 , conta.indexOf('*')+paraFentre)}`;
+            
+            res = conta.slice((conta.indexOf('*')-paraTras) , conta.indexOf('*'))*conta.slice(conta.indexOf('*')+1 , conta.indexOf('*')+paraFentre);
+
+            return conta = conta.replace(multi, res);
+    }
+
+    const divisao = (conta) => {
+        let multi;
+        let res;
+        let paraTras;
+        let paraFentre;
+        let outraOperacao = true;
+
+        for (let i = 1; i < conta.length; i++) {
+            if( conta.indexOf('/')-i >= 0 
+            && !!(parseInt( conta[conta.indexOf('/')-i] ) || conta[conta.indexOf('+')-i] === '0')
+            && outraOperacao ){
+                paraTras = i;
+            } else {
+                outraOperacao = false;
+            }
+        }
+
+        outraOperacao = true;
+
+        for (let i = 1; i < conta.length; i++) {
+            if( conta.indexOf('/')+i >= 0 
+            && (!!( parseInt( conta[conta.indexOf('+')+i] )) || conta[conta.indexOf('+')+i] === '0')
+            && outraOperacao ){
+                paraFentre = i+1;
+            } else {
+                outraOperacao = false;
+            }
+        }
+
+        multi = `${conta.slice((conta.indexOf('/')-paraTras) , conta.indexOf('/'))}/${conta.slice(conta.indexOf('/')+1 , conta.indexOf('/')+paraFentre)}`;
         
-        operador = el === '/' || el === '+' || el === '-' || el === '*' ? (!operador? el : (operador+el)) : null;
+        res = conta.slice((conta.indexOf('/')-paraTras) , conta.indexOf('/'))/conta.slice(conta.indexOf('/')+1 , conta.indexOf('/')+paraFentre);
 
-        !operador && num === 0? num = el : '';
-
-        arrayConta.length-1 === i? total = num: '';
-    });
+        return conta = conta.replace(multi, res);
+    }
     
-    return total
+    const soma = (conta) => {
+        let multi;
+        let res;
+        let paraTras;
+        let paraFentre;
+        let outraOperacao = true;
+
+        for (let i = 1; i < conta.length; i++) {
+            if( conta.indexOf('+')-i >= 0 
+            && !!(parseInt( conta[conta.indexOf('+')-i] ) || conta[conta.indexOf('+')-i] === '0')
+            && outraOperacao ){
+                paraTras = i;
+            } else {
+                outraOperacao = false;
+            }
+        }
+
+        outraOperacao = true;
+
+        for (let i = 1; i < conta.length; i++) {
+            if( conta.indexOf('+')+i >= 0 
+            && (!!( parseInt( conta[conta.indexOf('+')+i] )) || conta[conta.indexOf('+')+i] === '0')
+            && outraOperacao ){
+                paraFentre = i+1;
+            } else {
+                outraOperacao = false;
+            }
+        }
+        console.log("soma conta", conta);
+        multi = `${conta.slice((conta.indexOf('+')-paraTras) , conta.indexOf('+'))}+${conta.slice(conta.indexOf('+')+1 , conta.indexOf('+')+paraFentre)}`;
+        console.log("soma multi", multi);
+        res = parseInt(conta.slice((conta.indexOf('+')-paraTras) , conta.indexOf('+')))+parseInt(conta.slice(conta.indexOf('+')+1 , conta.indexOf('+')+paraFentre));
+        console.log("soma res", res);
+        return conta = conta.replace(multi, res);
+    }
+
+    const subtracao = (conta) => {
+        let multi;
+        let res;
+        let paraTras;
+        let paraFentre;
+        let outraOperacao = true;
+
+        for (let i = 1; i < conta.length; i++) {
+            if( conta.indexOf('-')-i >= 0 
+            && !!(parseInt( conta[conta.indexOf('-')-i] ) || conta[conta.indexOf('+')-i] === 0)
+            && outraOperacao ){
+                paraTras = i;
+            } else {
+                outraOperacao = false;
+            }
+        }
+
+        outraOperacao = true;
+
+        for (let i = 1; i < conta.length; i++) {
+            if( conta.indexOf('-')+i >= 0 
+            && (!!( parseInt( conta[conta.indexOf('+')+i] )) || conta[conta.indexOf('+')+i] === 0)
+            && outraOperacao ){
+                paraFentre = i+2;
+            } else {
+                outraOperacao = false;
+            }
+        }
+
+        multi = `${conta.slice((conta.indexOf('-')-paraTras) , conta.indexOf('-'))}-${conta.slice(conta.indexOf('-')+1 , conta.indexOf('-')+paraFentre)}`;
+        console.log("subtação multi ", multi);
+        res = conta.slice((conta.indexOf('-')-paraTras) , conta.indexOf('-'))-conta.slice(conta.indexOf('-')+1 , conta.indexOf('-')+paraFentre);
+        console.log("subtação res ", res);
+        return conta = conta.replace(multi, res);  
+    }
+
+    const funcoesCalc = (conta) => {
+        let operador;
+
+        if( conta.indexOf('(') !== -1 && conta.indexOf(')') !== -1 ) {
+            let parenteses;
+            let res;
+
+            parenteses = conta.slice( conta.indexOf('(') , conta.indexOf(')')+1 );
+            res = funcoesCalc( `${ conta.slice( conta.indexOf('(')+1, conta.indexOf(')') )}` )
+
+            conta = conta.replace(parenteses, res);
+
+            if( conta.indexOf('(') > -1){
+                conta = funcoesCalc(conta);
+            }
+        };
+
+        for (let i = 0; i < conta.length; i++) {
+
+            operador = conta[i];
+
+            if( operador === '*' ){
+                conta = multiplicacao(conta);
+                i = 0;
+            }
+    
+            if( operador === '/' ){
+                conta = divisao(conta);
+                i = 0;
+            }
+    
+            if( operador === '+' ){
+                conta = soma(conta);
+                i = 0;
+            }
+    
+            if( operador === '-' ){
+                conta = subtracao(conta);
+                i = 0;
+            }
+        }
+
+        if(conta === NaN || conta === false || conta === undefined){
+            alert("Conta inválida");
+            return visor.innerText = '';
+        }
+        
+        return conta
+    }
+
+    const resultado = () => {
+        visor.innerText = funcoesCalc('484/22*22/22+38-65+(55+945+20)');
+    }
+    
+    this.iniciar = () => {
+
+        document.addEventListener('click', (e) => {
+            dispararFuncaoClique(e.target);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            dispararFuncaoKey(e.key);
+        });
+    };
+
 }
 
-document.addEventListener('click', (e) => {
-    digitarNoVisor(e.target.innerText);
-})
+let cal = new Calculadora();
 
-document.addEventListener( 'keydown' , (e) => {
-    digitarNoVisor(e.key)
-})
-
+cal.iniciar();
