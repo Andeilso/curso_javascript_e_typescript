@@ -66,8 +66,10 @@ function Calculadora () {
             let outraOperacao = true;
 
             for (let i = 1; i < conta.length; i++) {
-                if( conta.indexOf('*')-i >= 0 
-                && !!(parseInt( conta[conta.indexOf('*')-i] ) || conta[conta.indexOf('+')-i] === '0')
+                if( conta.indexOf('+')-i >= 0 
+                && !!( parseInt( conta[conta.indexOf('+')-i] ) 
+                   || conta[conta.indexOf('+')-i] === '0' 
+                   || conta[conta.indexOf('+')-i] === '.' )
                 && outraOperacao ){
                     paraTras = i;
                 } else {
@@ -78,8 +80,10 @@ function Calculadora () {
             outraOperacao = true;
 
             for (let i = 1; i < conta.length; i++) {
-                if( conta.indexOf('*')+i >= 0 
-                && (!!( parseInt( conta[conta.indexOf('+')+i] )) || conta[conta.indexOf('+')+i] === '0')
+                if( conta.indexOf('+')+i >= 0 
+                && !!( parseInt( conta[conta.indexOf('+')+i] ) 
+                   || conta[conta.indexOf('+')+i] === '0' 
+                   || conta[conta.indexOf('+')+i] === '.' )
                 && outraOperacao ){
                     paraFentre = i+1;
                 } else {
@@ -89,7 +93,7 @@ function Calculadora () {
 
             multi = `${conta.slice((conta.indexOf('*')-paraTras) , conta.indexOf('*'))}*${conta.slice(conta.indexOf('*')+1 , conta.indexOf('*')+paraFentre)}`;
             
-            res = conta.slice((conta.indexOf('*')-paraTras) , conta.indexOf('*'))*conta.slice(conta.indexOf('*')+1 , conta.indexOf('*')+paraFentre);
+            res = (parseFloat(conta.slice((conta.indexOf('*')-paraTras) , conta.indexOf('*')))*parseFloat(conta.slice(conta.indexOf('*')+1 , conta.indexOf('*')+paraFentre))).toFixed(2);
 
             return conta = conta.replace(multi, res);
     }
@@ -102,8 +106,10 @@ function Calculadora () {
         let outraOperacao = true;
 
         for (let i = 1; i < conta.length; i++) {
-            if( conta.indexOf('/')-i >= 0 
-            && !!(parseInt( conta[conta.indexOf('/')-i] ) || conta[conta.indexOf('+')-i] === '0')
+            if( conta.indexOf('+')-i >= 0 
+            && !!( parseInt( conta[conta.indexOf('+')-i] ) 
+               || conta[conta.indexOf('+')-i] === '0' 
+               || conta[conta.indexOf('+')-i] === '.' )
             && outraOperacao ){
                 paraTras = i;
             } else {
@@ -114,8 +120,10 @@ function Calculadora () {
         outraOperacao = true;
 
         for (let i = 1; i < conta.length; i++) {
-            if( conta.indexOf('/')+i >= 0 
-            && (!!( parseInt( conta[conta.indexOf('+')+i] )) || conta[conta.indexOf('+')+i] === '0')
+            if( conta.indexOf('+')+i >= 0 
+            && !!( parseInt( conta[conta.indexOf('+')+i] ) 
+               || conta[conta.indexOf('+')+i] === '0' 
+               || conta[conta.indexOf('+')+i] === '.' )
             && outraOperacao ){
                 paraFentre = i+1;
             } else {
@@ -124,8 +132,8 @@ function Calculadora () {
         }
 
         multi = `${conta.slice((conta.indexOf('/')-paraTras) , conta.indexOf('/'))}/${conta.slice(conta.indexOf('/')+1 , conta.indexOf('/')+paraFentre)}`;
-        
-        res = conta.slice((conta.indexOf('/')-paraTras) , conta.indexOf('/'))/conta.slice(conta.indexOf('/')+1 , conta.indexOf('/')+paraFentre);
+
+        res = (parseFloat(conta.slice((conta.indexOf('/')-paraTras) , conta.indexOf('/')))/parseFloat(conta.slice(conta.indexOf('/')+1 , conta.indexOf('/')+paraFentre))).toFixed(2);
 
         return conta = conta.replace(multi, res);
     }
@@ -139,7 +147,9 @@ function Calculadora () {
 
         for (let i = 1; i < conta.length; i++) {
             if( conta.indexOf('+')-i >= 0 
-            && !!(parseInt( conta[conta.indexOf('+')-i] ) || conta[conta.indexOf('+')-i] === '0')
+            && !!( parseInt( conta[conta.indexOf('+')-i] ) 
+               || conta[conta.indexOf('+')-i] === '0' 
+               || conta[conta.indexOf('+')-i] === '.' )
             && outraOperacao ){
                 paraTras = i;
             } else {
@@ -151,7 +161,9 @@ function Calculadora () {
 
         for (let i = 1; i < conta.length; i++) {
             if( conta.indexOf('+')+i >= 0 
-            && (!!( parseInt( conta[conta.indexOf('+')+i] )) || conta[conta.indexOf('+')+i] === '0')
+            && !!( parseInt( conta[conta.indexOf('+')+i] ) 
+               || conta[conta.indexOf('+')+i] === '0' 
+               || conta[conta.indexOf('+')+i] === '.' )
             && outraOperacao ){
                 paraFentre = i+1;
             } else {
@@ -161,8 +173,8 @@ function Calculadora () {
 
         multi = `${conta.slice((conta.indexOf('+')-paraTras) , conta.indexOf('+'))}+${conta.slice(conta.indexOf('+')+1 , conta.indexOf('+')+paraFentre)}`;
 
-        res = parseInt(conta.slice((conta.indexOf('+')-paraTras) , conta.indexOf('+')))+parseInt(conta.slice(conta.indexOf('+')+1 , conta.indexOf('+')+paraFentre));
-        
+        res = (parseFloat(conta.slice((conta.indexOf('+')-paraTras) , conta.indexOf('+')))+parseFloat(conta.slice(conta.indexOf('+')+1 , conta.indexOf('+')+paraFentre))).toFixed(2);
+
         return conta = conta.replace(multi, res);
     }
 
@@ -174,8 +186,10 @@ function Calculadora () {
         let outraOperacao = true;
 
         for (let i = 1; i < conta.length; i++) {
-            if( conta.indexOf('-')-i >= 0 
-            && !!(parseInt( conta[conta.indexOf('-')-i] ) || conta[conta.indexOf('+')-i] === 0)
+            if( conta.indexOf('+')-i >= 0 
+            && !!( parseInt( conta[conta.indexOf('+')-i] ) 
+               || conta[conta.indexOf('+')-i] === '0' 
+               || conta[conta.indexOf('+')-i] === '.' )
             && outraOperacao ){
                 paraTras = i;
             } else {
@@ -186,8 +200,10 @@ function Calculadora () {
         outraOperacao = true;
 
         for (let i = 1; i < conta.length; i++) {
-            if( conta.indexOf('-')+i >= 0 
-            && (!!( parseInt( conta[conta.indexOf('+')+i] )) || conta[conta.indexOf('+')+i] === 0)
+            if( conta.indexOf('+')+i >= 0 
+            && !!( parseInt( conta[conta.indexOf('+')+i] ) 
+               || conta[conta.indexOf('+')+i] === '0' 
+               || conta[conta.indexOf('+')+i] === '.' )
             && outraOperacao ){
                 paraFentre = i+2;
             } else {
@@ -197,7 +213,7 @@ function Calculadora () {
 
         multi = `${conta.slice((conta.indexOf('-')-paraTras) , conta.indexOf('-'))}-${conta.slice(conta.indexOf('-')+1 , conta.indexOf('-')+paraFentre)}`;
 
-        res = conta.slice((conta.indexOf('-')-paraTras) , conta.indexOf('-'))-conta.slice(conta.indexOf('-')+1 , conta.indexOf('-')+paraFentre);
+        res = (parseFloat(conta.slice((conta.indexOf('-')-paraTras) , conta.indexOf('-')))-parseFloat(conta.slice(conta.indexOf('-')+1 , conta.indexOf('-')+paraFentre))).toFixed(2);
 
         return conta = conta.replace(multi, res);  
     }
